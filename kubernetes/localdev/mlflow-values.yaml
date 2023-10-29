@@ -1,0 +1,67 @@
+# Default values for mlflow.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# mlflow backend store settings
+db:
+  POSTGRES_HOST: ml-postgres
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: mlflow
+  # POSTGRES_USER: ... (must be provided as secret to kubernetes namespace)
+  # POSTGRES_PASSWORD: ... (must be provided as secret to kubernetes namespace)
+
+# mlflow artifact store settings
+s3:
+  MLFLOW_S3_ENDPOINT_URL: http://ml-minio:9000
+  MLFLOW_S3_IGNORE_TLS: true
+  AWS_DEFAULT_REGION: us-east-1
+  # AWS_SECRET_ACCESS_KEY: ... (must be provided as secret to kubernetes namespace)
+  # AWS_ACCESS_KEY_ID: ... (must be provided as secret to kubernetes namespace)
+
+# mlflow settings
+MLFLOW_ARTIFACTS_DESTINATION: s3://mlflow/test/artifacts # s3://my-bucket-name/mlflow/artifacts
+MLFLOW_EXPORT_PROMETHEUS: true # export prometheus metrics to /home/mlflow/metrics folder within the container and /metrics endpoint
+MLFLOW_WORKERS: 4
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: localhost
+      paths:
+        - path: /mlflow(/|$)(.*)
+          pathType: ImplementationSpecific
+  tls: []
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

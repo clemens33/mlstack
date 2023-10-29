@@ -1,0 +1,57 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: kustomization
+
+resources:
+  - localdev
+
+helmCharts:
+  - name: postgresql
+    releaseName: ml-postgres
+    includeCRDs: true
+    repo: https://charts.bitnami.com/bitnami
+    #version: ~13.1.5
+    version: "*"
+    valuesFile: localdev/postgres-values.yaml
+    valuesInline:
+      fullnameOverride: "ml-postgres"
+      image:
+        tag: latest
+
+  - name: minio
+    releaseName: ml-minio
+    includeCRDs: true
+    repo: https://charts.bitnami.com/bitnami
+    #version: ~12.8.15
+    version: "*"
+    valuesFile: localdev/minio-values.yaml
+    valuesInline:
+      fullnameOverride: "ml-minio"
+      image:
+        tag: latest
+
+  - name: mlflow
+    releaseName: mlflow
+    includeCRDs: true
+    repo: https://clemens33.github.io/mlflow/
+    #version: ~13.1.5
+    version: "*"
+    valuesFile: localdev/mlflow-values.yaml
+    valuesInline:
+      fullnameOverride: "ml-mlflow"
+      image:
+        repository: docker.io/clemens33/mlflow
+        tag: latest
+
+  - name: flyte-binary
+    releaseName: flyte
+    includeCRDs: true
+    repo: https://helm.flyte.org/
+    version: "*"
+    valuesFile: localdev/flyte-binary-values.yaml
+    valuesInline:
+      fullnameOverride: "ml-flyte"
+
+generatorOptions:
+  disableNameSuffixHash: true
