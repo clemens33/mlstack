@@ -58,3 +58,7 @@ Port forwards for mlflow
 kubectl port-forward svc/ml-mlflow 5000:80
 ```
 
+Delete kind cluster
+```bash
+kind delete cluster --name ml-stack
+```
