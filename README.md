@@ -16,6 +16,21 @@ poetry install
 
 ## Kubernetes
 
-For local development cluster refer to [kubernetes/README.md](kubernetes/README.md).
+For local development cluster and how to start refer to [kubernetes/README.md](kubernetes/README.md).
 
-https://github.com/davidmirror-ops/flyte-the-hard-way/blob/main/docs/on-premises/002-install-local-flyte.md
+## Flyte
+
+To test flyte locally using the local development cluster perform the following steps - (adapted from [here](https://github.com/davidmirror-ops/flyte-the-hard-way/blob/main/docs/on-premises/002-install-local-flyte.md)).
+
+Make sure the hosts entry for the fully qualified domain name (FQDN) is set to the minio service!
+
+```shell
+...
+127.0.0.1       ml-minio.default.svc.cluster.local
+...
+```
+
+```bash
+pyflyte run samples/hello_flyte.py my_wf
+```
+
