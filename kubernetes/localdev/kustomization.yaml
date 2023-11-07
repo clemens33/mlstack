@@ -7,9 +7,11 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
+  # persistent volumes
   - pv-minio.yaml
   - pv-postgres.yaml
+  # secrets
   - minio-secret.yaml
+  - flyte-secrets.yaml
   - postgres-secret.yaml
-  #- postgres-secret.yaml
   - s3-secret.yaml

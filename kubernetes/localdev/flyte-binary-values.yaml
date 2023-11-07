@@ -173,9 +173,13 @@ configuration:
       k8s:
         inject-finalizer: true
         default-env-vars:
-          - FLYTE_AWS_ENDPOINT: "http://ml-minio.default.svc.cluster.local:9000"
-          - FLYTE_AWS_ACCESS_KEY_ID: "minio"
-          - FLYTE_AWS_SECRET_ACCESS_KEY: "minio_password" #Use the same value as the MINIO_ROOT_PASSWORD
+          - name: FLYTE_AWS_ENDPOINT
+            value: "http://ml-minio.default.svc.cluster.local:9000"
+          # for now there is no way to add this as a secret - base helm chart does not support it
+          - name: FLYTE_AWS_ACCESS_KEY_ID
+            value: minio
+          - name: FLYTE_AWS_SECRET_ACCESS_KEY
+            value: minio_password
     task_resources:
       defaults:
         cpu: 100m

@@ -7,7 +7,8 @@ Sample deploying mlflow on local kubernetes cluster.
 Starts [kind](https://kind.sigs.k8s.io/) local (run from kubernetes directory)
 ```bash
 mkdir -p ./data && \
-kind create cluster --config kind-config-mlstack.yaml
+kind create cluster --config kind-config-mlstack.yaml && \
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 ```
 
 Enable ingress - using [ingress nginx](https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx) deploy ingress (Roles, RoleBinding, ServiceAccounts etc.) - you do not want to write this manually
