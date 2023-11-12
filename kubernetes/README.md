@@ -34,7 +34,7 @@ kubectl kustomize --enable-helm | kubectl apply -f -
 
 **Access**
 
-* mlflow: <http://localhost:8888/mlflow//#/>
+* mlflow: <http://localhost:8888/mlflow/#/>
 * minio: <http://localhost:8888/>
 
 ### Others
