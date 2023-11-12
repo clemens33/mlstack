@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ml-stack"
+name = "mlstack"
 version = "0.1.0"
 description = "ML Stack setup using flyte and mlflow"
 authors = ["Clemens Kriechbaumer <clemens.kriechbaumer@gmail.com>"]

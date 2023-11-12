@@ -67,5 +67,5 @@ kubectl port-forward svc/ml-flyte-http 8088:8088
 
 Delete kind cluster
 ```bash
-kind delete cluster --name ml-stack
+kind delete cluster --name mlstack
 ```
