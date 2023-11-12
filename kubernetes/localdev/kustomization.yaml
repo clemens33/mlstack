@@ -12,6 +12,6 @@ resources:
   - pv-postgres.yaml
   # secrets
   - minio-secret.yaml
-  - flyte-secrets.yaml
+  #- flyte-secrets.yaml
   - postgres-secret.yaml
   - s3-secret.yaml

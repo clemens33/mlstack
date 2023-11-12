@@ -25,12 +25,12 @@ helm repo add flyteorg https://flyteorg.github.io/flyte
 
 Deploy using kustomize and helm
 ```bash
-kubectl kustomize --enable-helm | kubectl apply -f -
+
 ```
 
 **Access**
-* mlflow: http://localhost:8088/mlflow/
-* minio: http://localhost:8088/
+* mlflow: http://localhost:8888/mlflow//#/
+* minio: http://localhost:8888/
 
 ### Others
 
@@ -57,6 +57,12 @@ kubectl port-forward svc/ml-postgres 5432:5432
 Port forwards for mlflow
 ```bash
 kubectl port-forward svc/ml-mlflow 5000:80
+```
+
+Port forwards for flyte
+```bash
+kubectl port-forward svc/ml-flyte-grpc 8089:8089
+kubectl port-forward svc/ml-flyte-http 8088:8088
 ```
 
 Delete kind cluster
