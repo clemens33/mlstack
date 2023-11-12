@@ -1,10 +1,11 @@
-# ml-stack
+# mlstack
 
 (work in progress)
 
-Infrastructure stack and playground for local machine learning development. Including workflow engine, experiment tracking, model serving (upcoming), and more.
+ML Infrastructure stack and playground for local (for now) machine learning development. Including workflow engine, experiment tracking, model serving (upcoming), and more.
 
 Includes the following components:
+
 * [flyte](https://flyte.org/)
 * [mlflow](https://mlflow.org/)
 
@@ -53,6 +54,3 @@ Executes a flyte workflow remotely.
 ```bash
 pyflyte run --remote samples/hello_flyte.py my_wf
 ```
-
-
-
