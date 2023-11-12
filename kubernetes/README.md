@@ -1,7 +1,5 @@
 # Kubernetes
 
-Sample deploying mlflow on local kubernetes cluster.
-
 ## Local Cluster
 
 Starts [kind](https://kind.sigs.k8s.io/) local (run from kubernetes directory)
