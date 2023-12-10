@@ -2,13 +2,13 @@ from flytekit import task, workflow
 
 
 @task
-def say_hello() -> str:
-    return "hello world"
+def say_hello(input: str) -> str:
+    return input
 
 
 @workflow
 def my_wf() -> str:
-    res = say_hello()
+    res = say_hello(input="abc")
     return res
 
 

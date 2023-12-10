@@ -77,5 +77,12 @@ kubectl port-forward svc/ml-flyte-http 8088:8088
 Delete kind cluster
 
 ```bash
-kind delete cluster --name mlstack
+kind delete cluster --name ml-stack
+```
+
+Exporting kind config
+
+```bash
+kind get kubeconfig --name ml-stack > ~/.kube/config_kind_ml-stack && \
+export KUBECONFIG=~/.kube/config_kind_ml-stack
 ```

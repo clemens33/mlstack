@@ -12,6 +12,13 @@ resources:
   - pv-postgres.yaml
   # secrets
   - minio-secret.yaml
+  - mlflow-backend-secret.yaml
+  - mlflow-storage-secret.yaml
   #- flyte-secrets.yaml
   - postgres-secret.yaml
-  - s3-secret.yaml
+  - init-db-secrets.yaml
+
+configMapGenerator:
+  - name: init-db-sh
+    files:
+      - init-db.sh

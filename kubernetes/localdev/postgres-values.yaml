@@ -115,7 +115,7 @@ image:
   pullSecrets: []
   ## Set to true if you would like to see extra information on logs
   ##
-  debug: false
+  debug: true
 ## Authentication parameters
 ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#setting-the-root-password-on-first-run
 ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#creating-a-database-on-first-run
@@ -130,13 +130,13 @@ auth:
   postgresPassword: ""
   ## @param auth.username Name for a custom user to create
   ##
-  username: "mlflow"
+  username: ""
   ## @param auth.password Password for the custom user to create. Ignored if `auth.existingSecret` is provided
   ##
   password: ""
   ## @param auth.database Name for a custom database to create
   ##
-  database: "mlflow"
+  database: ""
   ## @param auth.replicationUsername Name of the replication user
   ##
   replicationUsername: repl_user
@@ -340,7 +340,7 @@ primary:
     ## @param primary.initdb.scriptsConfigMap ConfigMap with scripts to be run at first boot
     ## NOTE: This will override `primary.initdb.scripts`
     ##
-    scriptsConfigMap: ""
+    scriptsConfigMap: "init-db-sh"
     ## @param primary.initdb.scriptsSecret Secret with scripts to be run at first boot (in case it contains sensitive information)
     ## NOTE: This can work along `primary.initdb.scripts` or `primary.initdb.scriptsConfigMap`
     ##
@@ -374,7 +374,7 @@ primary:
   extraEnvVarsCM: ""
   ## @param primary.extraEnvVarsSecret Name of existing Secret containing extra env vars for PostgreSQL Primary nodes
   ##
-  extraEnvVarsSecret: ""
+  extraEnvVarsSecret: "init-db-secrets"
   ## @param primary.command Override default container command (useful when using custom images)
   ##
   command: []

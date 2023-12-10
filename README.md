@@ -54,3 +54,17 @@ Executes a flyte workflow remotely.
 ```bash
 pyflyte run --remote samples/hello_flyte.py my_wf
 ```
+
+## MLFlow
+
+Test artifact storage:
+
+```bash
+poetry run python samples/mlflow/artifacts.py --tracking_uri http://localhost:8888/mlflow
+```
+
+Test experiment tracking:
+
+```bash
+poetry run python samples/mlflow/tracking.py --tracking_uri http://localhost:8888/mlflow
+```

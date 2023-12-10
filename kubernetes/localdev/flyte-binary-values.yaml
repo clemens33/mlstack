@@ -20,6 +20,7 @@ flyte-core-components:
     # seedProjects flyte projects to create by default
     seedProjects:
       - flytesnacks
+      - ml
   # propeller Configuration to disable propeller or any of its components
   propeller:
     # disabled Disables flytepropeller
@@ -36,18 +37,18 @@ configuration:
   # database Specify configuration for Flyte's database connection
   database:
     # username Name for user to connect to database as
-    username: postgres
+    username: "flyte"
     # password Password to connect to database with
     # If set, a Secret will be created with this value and mounted to Flyte pod
-    password: "postgres_password"
+    password: "flyte_password"
     # passwordPath Mountpath of file containing password to be added to Flyte deployment
     passwordPath: ""
     # host Hostname of database instance
-    host: ml-postgres
+    host: "ml-postgres"
     # port Port to connect to database at
     port: 5432
     # dbname Name of database to use
-    dbname: flyte
+    dbname: "flyte"
     # options Additional client options for connecting to database
     options: sslmode=disable
   # storage Specify configuration for object store
@@ -81,6 +82,15 @@ configuration:
       gcs:
         # project Google Cloud project in which bucket resides
         project: "my-organization-gcp-project"
+      azure:
+        # configDomainSuffix Domain name suffix
+        configDomainSuffix: ""
+        # configUploadConcurrency Upload Concurrency (default 4)
+        configUploadConcurrency: 4
+        # account Storage Account name
+        account: "storage-account-name"
+        # key Storage Account key if used
+        key: ""
   # logging Specify configuration for logs emitted by Flyte
   logging:
     # level Set the log level

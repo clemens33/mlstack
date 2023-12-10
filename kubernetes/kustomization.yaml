@@ -35,7 +35,6 @@ helmCharts:
     releaseName: mlflow
     includeCRDs: true
     repo: https://clemens33.github.io/mlflow/
-    #version: ~13.1.5
     version: "*"
     valuesFile: localdev/mlflow-values.yaml
     valuesInline:
