@@ -6,60 +6,42 @@ set -e
 # Environment variable for the PostgreSQL password
 export PGPASSWORD="${POSTGRES_PASSWORD}"
 
-# Check if 'flyte' user exists and create if not
-# Check if 'flyte' database exists and create if not
-psql -v ON_ERROR_STOP=1 <<-EOSQL
-     DO
-     \$do\$
-     BEGIN
-         IF NOT EXISTS (
-             SELECT FROM pg_roles
-             WHERE  rolname = 'flyte') THEN
+# Function to create a user and database if they do not exist
+create_user_and_db() {
+    local user=$1
+    local db=$2
+    local pw=$3
 
-             CREATE USER flyte WITH PASSWORD '${FLYTE_POSTGRES_PW}';
-         END IF;
-         IF NOT EXISTS (
-             SELECT FROM pg_database
-             WHERE  datname = 'flyte') THEN
+    # log message
+    echo "Creating user '$user' and database '$db'"
 
-             CREATE DATABASE flyte;
-         END IF;
-     END
-     \$do\$;
-     GRANT ALL PRIVILEGES ON DATABASE flyte TO flyte;
-EOSQL
+    # Create user if it doesn't exist
+    psql -v ON_ERROR_STOP=1 -c "DO \$\$
+       BEGIN
+           IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '$user') THEN
+               CREATE USER $user WITH PASSWORD '$pw';
+           END IF;
+       END
+       \$\$;"
 
-# Grant privileges to the 'flyte' user on the 'public' schema
-psql -v ON_ERROR_STOP=1 --dbname "flyte" <<-EOSQL
-     GRANT ALL PRIVILEGES ON SCHEMA public TO flyte;
-EOSQL
+    # Create database if it doesn't exist
+    psql -v ON_ERROR_STOP=1 -c "SELECT 1 FROM pg_database WHERE datname = '$db'" | grep -q 1 || psql -v ON_ERROR_STOP=1 -c "CREATE DATABASE $db"
 
-# Check if 'mlflow' user exists and create if not
-# Check if 'mlflow' database exists and create if not
-psql -v ON_ERROR_STOP=1 <<-EOSQL
-     DO
-     \$do\$
-     BEGIN
-         IF NOT EXISTS (
-             SELECT FROM pg_roles
-             WHERE  rolname = 'mlflow') THEN
+    # Grant all privileges on the database to the user
+    psql -v ON_ERROR_STOP=1 -c "GRANT ALL PRIVILEGES ON DATABASE $db TO $user;"
 
-             CREATE USER mlflow WITH PASSWORD '${MLFLOW_POSTGRES_PW}';
-         END IF;
-         IF NOT EXISTS (
-             SELECT FROM pg_database
-             WHERE  datname = 'mlflow') THEN
+    # Grant privileges to the user on the 'public' schema
+    psql -v ON_ERROR_STOP=1 --dbname "$db" -c "GRANT ALL PRIVILEGES ON SCHEMA public TO $user;"
+}
 
-             CREATE DATABASE mlflow;
-         END IF;
-     END
-     \$do\$;
-     GRANT ALL PRIVILEGES ON DATABASE mlflow TO mlflow;
-EOSQL
+# Create 'flyte' user and database
+create_user_and_db "flyte" "flyte" "${FLYTE_POSTGRES_PW}"
 
-# Grant privileges to the 'mlflow' user on the 'public' schema
-psql -v ON_ERROR_STOP=1 --dbname "mlflow" <<-EOSQL
-     GRANT ALL PRIVILEGES ON SCHEMA public TO mlflow;
-EOSQL
+# Create 'mlflow' user and database
+create_user_and_db "mlflow" "mlflow" "${MLFLOW_POSTGRES_PW}"
+
+# Create 'keycloak' user and database
+create_user_and_db "keycloak" "keycloak" "${KEYCLOAK_POSTGRES_PW}"
+
 
 echo "PostgreSQL databases and schemas prepared."

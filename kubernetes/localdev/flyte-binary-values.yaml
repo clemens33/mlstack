@@ -94,7 +94,7 @@ configuration:
   # logging Specify configuration for logs emitted by Flyte
   logging:
     # level Set the log level
-    level: 1
+    level: 7
     # plugins Specify additional logging plugins
     plugins:
       # kubernetes Configure logging plugin to have logs visible in the Kubernetes Dashboard
@@ -159,7 +159,7 @@ configuration:
       # repository CoPilot sidecar image repository
       repository: cr.flyte.org/flyteorg/flytecopilot # FLYTECOPILOT_IMAGE
       # tag CoPilot sidecar image tag
-      tag: v1.9.37 # FLYTECOPILOT_TAG
+      tag: v1.10.6 # FLYTECOPILOT_TAG
   # agentService Flyte Agent configuration
   agentService:
     defaultAgent:
@@ -183,7 +183,7 @@ configuration:
       k8s:
         inject-finalizer: true
         default-env-vars:
-          - MLFLOW_TRACKING_URI: "http://ml-mlflow.default.svc.cluster.local:5000"
+          - MLFLOW_TRACKING_URI: "http://ml-mlflow.default.svc.cluster.local:80"
 
           # flyte storage - for now there is no way to add this as a secret - base helm chart does not support it
           - FLYTE_AWS_ENDPOINT: "http://ml-minio.default.svc.cluster.local:9000"
@@ -191,9 +191,10 @@ configuration:
           - FLYTE_AWS_SECRET_ACCESS_KEY: "minio_password"
     task_resources:
       defaults:
-        cpu: 100m
-        memory: 500Mi #change default requested resources and limits to fit your needs
+        cpu: 200m
+        memory: 200Mi #change default requested resources and limits to fit your needs
       limits:
+        cpu: 2
         memory: 2Gi
     storage:
       cache:
@@ -230,7 +231,7 @@ deployment:
   # image Configure image to use for Flyte
   image:
     # repository Flyte image repository
-    repository: cr.flyte.org/flyteorg/flyte-binary # FLYTE_IMAGE
+    repository: cr.flyte.org/flyteorg/flyte-binary-release # FLYTE_IMAGE
     # tag Flyte image tag
     tag: latest # FLYTE_TAG
     # pullPolicy Flyte image pull policy
@@ -417,7 +418,7 @@ enabled_plugins:
         - container
         - sidecar
         - k8s-array
-        - agent-service
+        #- agent-service
       default-for-task-types:
         container: container
         sidecar: sidecar

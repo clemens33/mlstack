@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mlflow-config
+data:
+  MLFLOW_ADDITIONAL_OPTIONS: "--dev"
+  # MLFLOW_NO_DB_UPGRADE: "true"

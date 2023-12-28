@@ -49,6 +49,10 @@ service:
   type: ClusterIP
   port: 80
 
+extraEnvFrom:
+  - configMapRef:
+      name: "mlflow-config"
+
 ingress:
   enabled: true
   className: ""

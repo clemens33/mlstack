@@ -10,6 +10,7 @@ resources:
   # persistent volumes
   - pv-minio.yaml
   - pv-postgres.yaml
+  - mlflow-config.yaml
   # secrets
   - minio-secret.yaml
   - mlflow-backend-secret.yaml
@@ -17,6 +18,7 @@ resources:
   #- flyte-secrets.yaml
   - postgres-secret.yaml
   - init-db-secrets.yaml
+  - keycloak-secret.yaml
 
 configMapGenerator:
   - name: init-db-sh
